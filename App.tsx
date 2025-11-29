@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
@@ -11,6 +12,8 @@ import { Footer } from './components/Footer';
 import { CMSProvider } from './components/CMSContext';
 import { AdminPanel } from './components/AdminPanel';
 import { ScrollToTop } from './components/ScrollToTop';
+import { ModalProvider } from './components/ModalContext';
+import { ContactModal } from './components/ContactModal';
 
 // Landing Page Component: Renders all sections
 const LandingPage = () => (
@@ -27,27 +30,30 @@ const LandingPage = () => (
 const App: React.FC = () => {
   return (
     <CMSProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="bg-white min-h-screen text-gray-800 flex flex-col">
-          <Navbar />
-          <main className="flex-grow">
-            <Routes>
-              {/* Home route renders everything */}
-              <Route path="/" element={<LandingPage />} />
-              
-              {/* Individual routes render specific sections with extra padding for navbar */}
-              <Route path="/about" element={<div className="pt-20"><About /></div>} />
-              <Route path="/services" element={<div className="pt-20"><Services /></div>} />
-              <Route path="/partners" element={<div className="pt-20"><Partners /></div>} />
-              <Route path="/blog" element={<div className="pt-20"><Blog /></div>} />
-              <Route path="/contact" element={<div className="pt-20"><Contact /></div>} />
-            </Routes>
-          </main>
-          <Footer />
-          <AdminPanel />
-        </div>
-      </Router>
+      <ModalProvider>
+        <Router>
+          <ScrollToTop />
+          <div className="bg-white min-h-screen text-gray-800 flex flex-col">
+            <Navbar />
+            <ContactModal />
+            <main className="flex-grow">
+              <Routes>
+                {/* Home route renders everything */}
+                <Route path="/" element={<LandingPage />} />
+                
+                {/* Individual routes render specific sections with extra padding for navbar */}
+                <Route path="/about" element={<div className="pt-20"><About /></div>} />
+                <Route path="/services" element={<div className="pt-20"><Services /></div>} />
+                <Route path="/partners" element={<div className="pt-20"><Partners /></div>} />
+                <Route path="/blog" element={<div className="pt-20"><Blog /></div>} />
+                <Route path="/contact" element={<div className="pt-20"><Contact /></div>} />
+              </Routes>
+            </main>
+            <Footer />
+            <AdminPanel />
+          </div>
+        </Router>
+      </ModalProvider>
     </CMSProvider>
   );
 };

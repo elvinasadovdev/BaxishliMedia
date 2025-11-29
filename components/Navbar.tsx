@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useCMS } from './CMSContext';
+import { useModal } from './ModalContext';
 
 const navItems = [
   { label: 'Ana səhifə', path: '/' },
@@ -14,6 +16,7 @@ const navItems = [
 
 export const Navbar: React.FC = () => {
   const { data } = useCMS();
+  const { openModal } = useModal();
   const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -69,13 +72,13 @@ export const Navbar: React.FC = () => {
             ))}
           </div>
           
-          {/* Blue CTA Button */}
-          <Link 
-            to="/contact"
+          {/* Blue CTA Button - Opens Modal */}
+          <button 
+            onClick={openModal}
             className="px-6 py-2.5 bg-[#0f6cbd] hover:bg-[#0d5ca0] text-white text-sm font-medium rounded-full transition-colors shadow-lg whitespace-nowrap"
           >
             Müraciət et
-          </Link>
+          </button>
         </div>
 
         {/* Mobile Toggle - Right */}
@@ -103,13 +106,15 @@ export const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             ))}
-             <Link 
-                to="/contact"
-                onClick={() => setIsMobileMenuOpen(false)}
+             <button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  openModal();
+                }}
                 className="px-8 py-3 bg-[#0f6cbd] text-white font-medium rounded-full"
             >
                 Müraciət et
-            </Link>
+            </button>
           </div>
         </div>
       )}
