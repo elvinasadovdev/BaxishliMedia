@@ -30,7 +30,7 @@ export interface NavItem {
 
 export interface SiteData {
   general: {
-    artistName: string; // "NK MEDIA"
+    artistName: string; // "BaxishliMedia"
     contactEmail: string;
     contactPhone: string;
     address: string;

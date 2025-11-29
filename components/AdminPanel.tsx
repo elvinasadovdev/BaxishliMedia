@@ -63,7 +63,7 @@ export const AdminPanel: React.FC = () => {
                 <Settings className="text-indigo-400" size={20} />
              </div>
              <div>
-               <h2 className="text-white font-bold tracking-wide">NK CMS</h2>
+               <h2 className="text-white font-bold tracking-wide">BaxishliMedia CMS</h2>
                <p className="text-xs text-gray-500">Real-time Editor</p>
              </div>
           </div>

@@ -4,13 +4,13 @@ import { SiteData } from '../types';
 
 const defaultData: SiteData = {
   general: {
-    artistName: "NK MEDIA",
-    contactEmail: "support@nkmedia.az",
+    artistName: "BaxishliMedia",
+    contactEmail: "support@baxishlimedia.az",
     contactPhone: "(+994) 55 529 19 94",
     address: "Heydər Əliyev prospekti ev 22 Mənzil 27, AZ 1800 Şirvan, Azərbaycan"
   },
   hero: {
-    title: "NK Media - Sizin Partnyorunuz",
+    title: "BaxishliMedia - Sizin Partnyorunuz",
     subtitle: "YouTube kanallarınızın və içeriklərinizin qorunmasını bizə etibar edin",
     backgroundImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop", // Dark office desk
     buttonText: "Daha ətraflı"
@@ -18,8 +18,8 @@ const defaultData: SiteData = {
   about: {
     heading: "Haqqımızda",
     text: [
-      "NK Media, Azərbaycanda fəaliyyət göstərən və media sahəsində mühüm rol oynayan bir şirkətdir. Şirkət, xüsusilə rəqəmsal və ənənəvi media sahələrindəki geniş təcrübəsi ilə tanınır.",
-      "NK Media-nın fəaliyyət sahələri arasında media planlama, reklam kampaniyaları, brendinq, sosial media idarəçiliyi və PR xidmətləri yer alır.",
+      "BaxishliMedia, Azərbaycanda fəaliyyət göstərən və media sahəsində mühüm rol oynayan bir şirkətdir. Şirkət, xüsusilə rəqəmsal və ənənəvi media sahələrindəki geniş təcrübəsi ilə tanınır.",
+      "BaxishliMedia-nın fəaliyyət sahələri arasında media planlama, reklam kampaniyaları, brendinq, sosial media idarəçiliyi və PR xidmətləri yer alır.",
       "Komandamız, sektordakı ən son trendləri izləyərək, yeni imkanlar və innovativ yollar yaradır."
     ],
     image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop",

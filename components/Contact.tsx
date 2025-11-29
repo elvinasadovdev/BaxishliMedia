@@ -26,7 +26,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div className="text-gray-600 text-sm">
                     <div className="font-medium">{general.contactEmail}</div>
-                    <div className="text-xs text-gray-400">copyright@nkmedia.az</div>
+                    <div className="text-xs text-gray-400">copyright@baxishlimedia.az</div>
                 </div>
             </div>
             <div className="flex flex-col items-center">
@@ -96,7 +96,7 @@ export const Contact: React.FC = () => {
          <img src={contact.mapImage} className="w-full h-full object-cover grayscale opacity-60" alt="Map" />
          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
              <div className="bg-white p-4 rounded-xl shadow-xl flex flex-col items-center">
-                <div className="text-[#f05a28] font-bold">NK Media</div>
+                <div className="text-[#f05a28] font-bold">BaxishliMedia</div>
                 <div className="text-xs text-gray-500">14 Nizami Street, Baku</div>
              </div>
          </div>

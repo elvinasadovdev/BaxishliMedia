@@ -43,7 +43,7 @@ export const Navbar: React.FC = () => {
         {/* Logo Area - Fixed to the Left */}
         <Link to="/" className="flex flex-col leading-none group relative z-20">
             <div className="text-3xl font-bold tracking-tighter">
-                <span className="text-[#f05a28]">NK</span>
+                <span className="text-[#f05a28]">Baxishli</span>
             </div>
             <div className="text-[10px] tracking-[0.3em] text-gray-400 font-light group-hover:text-white transition-colors">
                 MEDIA
