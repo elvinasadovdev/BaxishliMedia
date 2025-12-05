@@ -28,6 +28,27 @@ export interface NavItem {
   href: string;
 }
 
+export interface MusicTrack {
+  id: number;
+  title: string;
+  album: string;
+  duration: string;
+  plays: string;
+}
+
+export interface MusicSection {
+  heading: string;
+  headingAccent: string;
+  albumArt: string;
+  tracks: MusicTrack[];
+}
+
+export interface GallerySection {
+  heading: string;
+  headingAccent: string;
+  images: string[];
+}
+
 export interface SiteData {
   general: {
     artistName: string; // "BaxishliMedia"
@@ -57,6 +78,8 @@ export interface SiteData {
     items: Partner[];
     brandLogos: string[]; // URLs for Yoola, Believe, etc.
   };
+  music: MusicSection;
+  gallery: GallerySection;
   blog: {
     heading: string;
     subtitle: string;

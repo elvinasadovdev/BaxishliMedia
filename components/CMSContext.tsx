@@ -59,6 +59,29 @@ const defaultData: SiteData = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Believe_Music_Logo.svg/1200px-Believe_Music_Logo.svg.png" 
     ]
   },
+  music: {
+    heading: "Musiqi",
+    headingAccent: "Dünyası",
+    albumArt: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop",
+    tracks: [
+        { id: 1, title: "Track 1", album: "Album 1", duration: "3:45", plays: "1.2M" },
+        { id: 2, title: "Track 2", album: "Album 1", duration: "4:02", plays: "850K" },
+        { id: 3, title: "Track 3", album: "Album 2", duration: "3:15", plays: "2.1M" },
+        { id: 4, title: "Track 4", album: "Album 2", duration: "3:58", plays: "900K" }
+    ]
+  },
+  gallery: {
+    heading: "Qalereya",
+    headingAccent: "Fotolar",
+    images: [
+        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1459749411177-d2841fbd63e7?q=80&w=2070&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop",
+        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
+    ]
+  },
   blog: {
     heading: "Bloq",
     subtitle: "Hər kəs üçün faydalı bloq yazılarımız",

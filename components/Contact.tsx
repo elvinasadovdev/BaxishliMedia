@@ -1,12 +1,54 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Linkedin } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Linkedin, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { useCMS } from './CMSContext';
 
 export const Contact: React.FC = () => {
   const { data } = useCMS();
   const { contact, general } = data;
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [feedback, setFeedback] = useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    try {
+      // Simulating the API backend call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Mocking the required JSON response structure
+      const response = {
+        status: "success",
+        result: "Mesajınız uğurla göndərildi! Tezliklə sizinlə əlaqə saxlayacağıq.",
+        error: null
+      };
+
+      if (response.status === 'success') {
+        setStatus('success');
+        setFeedback(response.result);
+        setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+      } else {
+        throw new Error(response.error || 'Xəta baş verdi');
+      }
+    } catch (error) {
+      setStatus('error');
+      setFeedback('Bağışlayın, xəta baş verdi. Zəhmət olmasa bir az sonra yenidən cəhd edin.');
+    }
+  };
 
   return (
     <section id="contact" className="py-16 bg-white">
@@ -72,20 +114,78 @@ export const Contact: React.FC = () => {
             <h3 className="text-2xl font-bold text-gray-800 mb-2">Bizə yazın</h3>
             <p className="text-gray-500 text-sm mb-6">Vaxt itirməyin, elə indi bizimlə əlaqə saxlayın.</p>
             
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="text" placeholder="Adınız*" className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" />
-                  <input type="text" placeholder="Soyadınız*" className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" />
+                  <input 
+                    name="firstName" 
+                    value={formData.firstName} 
+                    onChange={handleChange} 
+                    required
+                    type="text" 
+                    placeholder="Adınız*" 
+                    className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" 
+                  />
+                  <input 
+                    name="lastName" 
+                    value={formData.lastName} 
+                    onChange={handleChange} 
+                    required
+                    type="text" 
+                    placeholder="Soyadınız*" 
+                    className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" 
+                  />
                </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="email" placeholder="E-poçt*" className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" />
-                  <input type="text" placeholder="Telefon*" className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" />
+                  <input 
+                    name="email" 
+                    value={formData.email} 
+                    onChange={handleChange} 
+                    required
+                    type="email" 
+                    placeholder="E-poçt*" 
+                    className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" 
+                  />
+                  <input 
+                    name="phone" 
+                    value={formData.phone} 
+                    onChange={handleChange} 
+                    required
+                    type="text" 
+                    placeholder="Telefon*" 
+                    className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]" 
+                  />
                </div>
-               <textarea rows={4} placeholder="Mesajınız*" className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]"></textarea>
+               <textarea 
+                 name="message" 
+                 value={formData.message} 
+                 onChange={handleChange} 
+                 required
+                 rows={4} 
+                 placeholder="Mesajınız*" 
+                 className="w-full bg-white border border-gray-200 p-3 rounded-lg focus:outline-none focus:border-[#f05a28]"
+               ></textarea>
                
-               <button className="w-full bg-[#e67e22] text-white font-medium py-3 rounded-lg hover:bg-[#d35400] transition-colors">
-                  Göndər
+               <button 
+                  disabled={status === 'loading' || status === 'success'}
+                  className="w-full bg-[#e67e22] text-white font-medium py-3 rounded-lg hover:bg-[#d35400] transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-2"
+               >
+                  {status === 'loading' && <Loader2 className="animate-spin" size={20} />}
+                  {status === 'success' ? 'Göndərildi' : status === 'loading' ? 'Göndərilir...' : 'Göndər'}
                </button>
+
+               {status === 'success' && (
+                 <div className="p-3 bg-green-50 text-green-700 rounded-lg flex items-center gap-2 text-sm mt-2">
+                   <CheckCircle size={16} />
+                   {feedback}
+                 </div>
+               )}
+               
+               {status === 'error' && (
+                 <div className="p-3 bg-red-50 text-red-700 rounded-lg flex items-center gap-2 text-sm mt-2">
+                   <AlertCircle size={16} />
+                   {feedback}
+                 </div>
+               )}
             </form>
           </div>
         </div>
