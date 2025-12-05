@@ -1,5 +1,4 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { kv } from '@vercel/kv';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Enable CORS
@@ -12,6 +11,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
+        // Check if KV is available
+        let kv;
+        try {
+            const kvModule = await import('@vercel/kv');
+            kv = kvModule.kv;
+        } catch (error) {
+            return res.status(503).json({
+                error: 'Vercel KV not configured',
+                message: 'Please set up Vercel KV in your dashboard: https://vercel.com/dashboard → Storage → Create KV Database',
+                fallback: 'Using localStorage for now'
+            });
+        }
+
         if (req.method === 'GET') {
             // Load CMS data
             const data = await kv.get('baxishlimedia-cms-data');
@@ -39,6 +51,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(405).json({ error: 'Method not allowed' });
     } catch (error) {
         console.error('API Error:', error);
-        return res.status(500).json({ error: 'Internal server error' });
+        return res.status(500).json({
+            error: 'Internal server error',
+            details: error instanceof Error ? error.message : 'Unknown error'
+        });
     }
 }

@@ -19,7 +19,7 @@ export const AdminPanel: React.FC = () => {
 
   const handleSave = async () => {
     try {
-      // Save data to Vercel API
+      // Try to save data to Vercel API first
       const response = await fetch('/api/cms-data', {
         method: 'POST',
         headers: {
@@ -28,15 +28,31 @@ export const AdminPanel: React.FC = () => {
         body: JSON.stringify(data),
       });
 
+      const result = await response.json();
+
+      if (response.status === 503) {
+        // KV not configured - fallback to localStorage
+        console.warn('Vercel KV not configured, using localStorage:', result.message);
+        localStorage.setItem('baxishlimedia-cms-data', JSON.stringify(data));
+        setSaveSuccess(true);
+        setTimeout(() => setSaveSuccess(false), 3000);
+        alert('⚠️ Changes saved locally only.\n\nTo save globally for all users,set up Vercel KV:\n1. Go to Vercel Dashboard\n2. Storage → Create KV Database\n3. Connect to your project');
+        return;
+      }
+
       if (!response.ok) {
-        throw new Error('Failed to save data');
+        throw new Error(result.error || 'Failed to save data');
       }
 
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (error) {
       console.error('Save error:', error);
-      alert('Failed to save changes. Please try again.');
+      // Fallback to localStorage
+      localStorage.setItem('baxishlimedia-cms-data', JSON.stringify(data));
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+      alert('⚠️ Could not connect to server.\nChanges saved locally on this device only.');
     }
   };
 
