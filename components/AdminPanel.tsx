@@ -17,11 +17,27 @@ export const AdminPanel: React.FC = () => {
     setIsOpen(location.pathname === '/admin');
   }, [location.pathname]);
 
-  const handleSave = () => {
-    // Save data to localStorage
-    localStorage.setItem('baxishlimedia-cms-data', JSON.stringify(data));
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 3000);
+  const handleSave = async () => {
+    try {
+      // Save data to Vercel API
+      const response = await fetch('/api/cms-data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save data');
+      }
+
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3000);
+    } catch (error) {
+      console.error('Save error:', error);
+      alert('Failed to save changes. Please try again.');
+    }
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, callback: (dataUrl: string) => void) => {

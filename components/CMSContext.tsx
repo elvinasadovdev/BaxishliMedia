@@ -108,32 +108,50 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [data, setData] = useState<SiteData>(defaultData);
 
   useEffect(() => {
-    // First check localStorage for saved data
-    const localData = localStorage.getItem('baxishlimedia-cms-data');
-    if (localData) {
+    const loadData = async () => {
       try {
-        const savedData = JSON.parse(localData);
-        if (savedData && typeof savedData === 'object') {
-          setData(prev => ({ ...prev, ...savedData }));
-          return;
+        // First try to load from Vercel API
+        const response = await fetch('/api/cms-data');
+        if (response.ok) {
+          const savedData = await response.json();
+          if (savedData && typeof savedData === 'object') {
+            setData(prev => ({ ...prev, ...savedData }));
+            return;
+          }
         }
-      } catch (e) {
-        console.error("Failed to parse localStorage data", e);
+      } catch (error) {
+        console.error('Failed to load from API, falling back to localStorage', error);
       }
-    }
 
-    // Fallback to script tag data
-    const scriptTag = document.getElementById('site-data');
-    if (scriptTag && scriptTag.textContent) {
-      try {
-        const savedData = JSON.parse(scriptTag.textContent);
-        if (savedData && typeof savedData === 'object') {
-          setData(prev => ({ ...prev, ...savedData }));
+      // Fallback to localStorage for saved data
+      const localData = localStorage.getItem('baxishlimedia-cms-data');
+      if (localData) {
+        try {
+          const savedData = JSON.parse(localData);
+          if (savedData && typeof savedData === 'object') {
+            setData(prev => ({ ...prev, ...savedData }));
+            return;
+          }
+        } catch (e) {
+          console.error("Failed to parse localStorage data", e);
         }
-      } catch (e) {
-        console.error("Failed to parse embedded site data", e);
       }
-    }
+
+      // Fallback to script tag data
+      const scriptTag = document.getElementById('site-data');
+      if (scriptTag && scriptTag.textContent) {
+        try {
+          const savedData = JSON.parse(scriptTag.textContent);
+          if (savedData && typeof savedData === 'object') {
+            setData(prev => ({ ...prev, ...savedData }));
+          }
+        } catch (e) {
+          console.error("Failed to parse embedded site data", e);
+        }
+      }
+    };
+
+    loadData();
   }, []);
 
   const updateData = (newData: SiteData) => {
