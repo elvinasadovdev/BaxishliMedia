@@ -40,13 +40,16 @@ const App: React.FC = () => {
               <Routes>
                 {/* Home route renders everything */}
                 <Route path="/" element={<LandingPage />} />
-                
+
                 {/* Individual routes render specific sections with extra padding for navbar */}
                 <Route path="/about" element={<div className="pt-20"><About /></div>} />
                 <Route path="/services" element={<div className="pt-20"><Services /></div>} />
                 <Route path="/partners" element={<div className="pt-20"><Partners /></div>} />
                 <Route path="/blog" element={<div className="pt-20"><Blog /></div>} />
                 <Route path="/contact" element={<div className="pt-20"><Contact /></div>} />
+
+                {/* Admin CMS Panel Route */}
+                <Route path="/admin" element={<div />} />
               </Routes>
             </main>
             <Footer />

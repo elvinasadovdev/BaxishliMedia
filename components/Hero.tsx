@@ -12,16 +12,16 @@ export const Hero: React.FC = () => {
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img
-          src={hero.backgroundImage}
-          alt="Office Background"
+          src="/hero-bg.png"
+          alt="SMM for Musicians"
           className="w-full h-full object-cover"
         />
         {/* Dark overlay to make text pop */}
-        <div className="absolute inset-0 bg-black/70"></div>
+        <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto flex flex-col items-center">
-        
+
         {/* Main Title */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}

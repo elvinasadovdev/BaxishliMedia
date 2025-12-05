@@ -18,9 +18,7 @@ const defaultData: SiteData = {
   about: {
     heading: "Haqqımızda",
     text: [
-      "BaxishliMedia, Azərbaycanda fəaliyyət göstərən və media sahəsində mühüm rol oynayan bir şirkətdir. Şirkət, xüsusilə rəqəmsal və ənənəvi media sahələrindəki geniş təcrübəsi ilə tanınır.",
-      "BaxishliMedia-nın fəaliyyət sahələri arasında media planlama, reklam kampaniyaları, brendinq, sosial media idarəçiliyi və PR xidmətləri yer alır.",
-      "Komandamız, sektordakı ən son trendləri izləyərək, yeni imkanlar və innovativ yollar yaradır."
+      "Baxışlı Media — Azərbaycanda fəaliyyət göstərən müğənniləri, musiqiçiləri və gənc artistləri bir araya toplayan musiqi platformasıdır. Məqsədimiz istedadı önə çıxarmaq, sənətçilərin tanıtımını gücləndirmək və tamaşaçılara keyfiyyətli musiqi təqdim etməkdir."
     ],
     image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop",
     stats: [
@@ -56,7 +54,7 @@ const defaultData: SiteData = {
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/1024px-YouTube_Logo_2017.svg.png",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png",
       "https://upload.wikimedia.org/wikipedia/commons/b/b9/2023_Facebook_icon.svg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Believe_Music_Logo.svg/1200px-Believe_Music_Logo.svg.png" 
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Believe_Music_Logo.svg/1200px-Believe_Music_Logo.svg.png"
     ]
   },
   music: {
@@ -64,22 +62,22 @@ const defaultData: SiteData = {
     headingAccent: "Dünyası",
     albumArt: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop",
     tracks: [
-        { id: 1, title: "Track 1", album: "Album 1", duration: "3:45", plays: "1.2M" },
-        { id: 2, title: "Track 2", album: "Album 1", duration: "4:02", plays: "850K" },
-        { id: 3, title: "Track 3", album: "Album 2", duration: "3:15", plays: "2.1M" },
-        { id: 4, title: "Track 4", album: "Album 2", duration: "3:58", plays: "900K" }
+      { id: 1, title: "Track 1", album: "Album 1", duration: "3:45", plays: "1.2M" },
+      { id: 2, title: "Track 2", album: "Album 1", duration: "4:02", plays: "850K" },
+      { id: 3, title: "Track 3", album: "Album 2", duration: "3:15", plays: "2.1M" },
+      { id: 4, title: "Track 4", album: "Album 2", duration: "3:58", plays: "900K" }
     ]
   },
   gallery: {
     heading: "Qalereya",
     headingAccent: "Fotolar",
     images: [
-        "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1459749411177-d2841fbd63e7?q=80&w=2070&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop",
-        "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
+      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?q=80&w=2070&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1459749411177-d2841fbd63e7?q=80&w=2070&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2070&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1511379938547-c1f69419868d?q=80&w=2070&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
     ]
   },
   blog: {
@@ -93,10 +91,9 @@ const defaultData: SiteData = {
   },
   contact: {
     heading: "Bizimlə əlaqə",
-    directorName: "Nadir Kərimov",
+    directorName: "Pərvin Baxışlı",
     directorTitle: "Direktor",
-    directorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop",
-    mapImage: "https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop"
+    directorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop"
   }
 };
 
@@ -111,12 +108,27 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [data, setData] = useState<SiteData>(defaultData);
 
   useEffect(() => {
+    // First check localStorage for saved data
+    const localData = localStorage.getItem('baxishlimedia-cms-data');
+    if (localData) {
+      try {
+        const savedData = JSON.parse(localData);
+        if (savedData && typeof savedData === 'object') {
+          setData(prev => ({ ...prev, ...savedData }));
+          return;
+        }
+      } catch (e) {
+        console.error("Failed to parse localStorage data", e);
+      }
+    }
+
+    // Fallback to script tag data
     const scriptTag = document.getElementById('site-data');
     if (scriptTag && scriptTag.textContent) {
       try {
         const savedData = JSON.parse(scriptTag.textContent);
         if (savedData && typeof savedData === 'object') {
-            setData(prev => ({ ...prev, ...savedData }));
+          setData(prev => ({ ...prev, ...savedData }));
         }
       } catch (e) {
         console.error("Failed to parse embedded site data", e);

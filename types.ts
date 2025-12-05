@@ -90,6 +90,5 @@ export interface SiteData {
     directorName: string;
     directorTitle: string;
     directorImage: string;
-    mapImage: string;
   };
 }
