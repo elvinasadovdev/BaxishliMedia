@@ -108,6 +108,7 @@ const CMSContext = createContext<CMSContextType | undefined>(undefined);
 
 export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<SiteData>(defaultData);
+  const [isLoading, setIsLoading] = useState(true);
 
   const loadData = async () => {
     try {
@@ -172,6 +173,9 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           }
         }
       }
+
+      // Small delay to ensure smooth transition
+      setTimeout(() => setIsLoading(false), 800);
     };
 
     initialLoad();
@@ -187,7 +191,28 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <CMSContext.Provider value={{ data, updateData }}>
-      {children}
+      {isLoading ? (
+        <div className="fixed inset-0 bg-[#050505] z-[9999] flex flex-col items-center justify-center">
+          <div className="relative">
+            <div className="w-20 h-20 border-2 border-[#f05a28]/20 rounded-full"></div>
+            <div className="absolute inset-0 w-20 h-20 border-t-2 border-[#f05a28] rounded-full animate-spin"></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-[#f05a28] font-bold text-xl tracking-tighter">B</span>
+            </div>
+          </div>
+          <div className="mt-8 flex flex-col items-center gap-2">
+            <h2 className="text-white font-bold tracking-[0.3em] text-xs uppercase opacity-80">BaxishliMedia</h2>
+            <div className="flex gap-1">
+              <div className="w-1 h-1 bg-[#f05a28] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="w-1 h-1 bg-[#f05a28] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="w-1 h-1 bg-[#f05a28] rounded-full animate-bounce"></div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+      <div className={isLoading ? 'opacity-0' : 'opacity-100 transition-opacity duration-1000'}>
+        {children}
+      </div>
     </CMSContext.Provider>
   );
 };
