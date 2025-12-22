@@ -58,7 +58,7 @@ const defaultData: SiteData = {
       "/spotify-logo.png",
       "/itunes-logo.png",
       "/believe-logo.png",
-      "https://i.ibb.co/v4S8X8m/luna-music-house.png"
+      "/luna-logo.png"
     ]
   },
   music: {

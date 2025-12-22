@@ -8,8 +8,8 @@ const platforms = [
     { name: 'Instagram', logo: '/instagram-logo.png' },
     { name: 'Spotify', logo: '/spotify-logo.png' },
     { name: 'iTunes', logo: '/itunes-logo.png' },
-    { name: 'Luna Music', logo: 'https://i.ibb.co/v4S8X8m/luna-music-house.png' },
-    { name: 'Yoola', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Yoola_Logo.svg/512px-Yoola_Logo.svg.png' },
+    { name: 'Luna Music', logo: '/luna-logo.png' },
+    { name: 'Yoola', logo: '/yoola-logo.png' },
     { name: 'Believe', logo: '/believe-logo.png' },
     { name: 'Facebook', logo: '/facebook-logo.png' }
 ];
