@@ -16,7 +16,7 @@ export const AdminPanel: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const ADMIN_PASSWORD = 'admin'; // You can change this password
+  const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'BaxishliMedia_Secure_2025!@#'; // Strong default password
 
   useEffect(() => {
     const auth = sessionStorage.getItem('cms-auth');
