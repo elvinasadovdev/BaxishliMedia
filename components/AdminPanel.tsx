@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Settings, X, Save, Download, Plus, Trash2, Image, Type, Link as LinkIcon, Edit3, Upload } from 'lucide-react';
+import { Settings, X, Save, Download, Plus, Trash2, Image, Type, Link as LinkIcon, Edit3, Upload, Lock, ChevronRight } from 'lucide-react';
 import { useCMS } from './CMSContext';
 import { SiteData } from '../types';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -8,10 +8,41 @@ import { useLocation, useNavigate } from 'react-router-dom';
 export const AdminPanel: React.FC = () => {
   const { data, updateData } = useCMS();
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState<keyof SiteData>('partners');
   const [saveSuccess, setSaveSuccess] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const ADMIN_PASSWORD = 'admin'; // You can change this password
+
+  useEffect(() => {
+    const auth = sessionStorage.getItem('cms-auth');
+    if (auth === 'true') {
+      setIsAuthenticated(true);
+    }
+    setIsOpen(location.pathname === '/admin');
+  }, [location.pathname]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('cms-auth', 'true');
+      setError('');
+    } else {
+      setError('Yanlış şifrə!');
+      setPassword('');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('cms-auth');
+    closeAdmin();
+  };
 
   const tabLabels: Record<string, string> = {
     partners: 'Partnyorlar',
@@ -80,6 +111,48 @@ export const AdminPanel: React.FC = () => {
 
   if (!isOpen) return null;
 
+  if (!isAuthenticated) {
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-xl animate-in fade-in duration-500">
+        <div className="bg-[#111] w-full max-w-md p-8 rounded-2xl shadow-2xl border border-neutral-800 flex flex-col items-center text-center">
+          <div className="w-16 h-16 bg-indigo-900/30 rounded-2xl flex items-center justify-center mb-6">
+            <Lock className="text-indigo-400" size={32} />
+          </div>
+          <h2 className="text-2xl font-bold text-white mb-2">Giriş Tələb Olunur</h2>
+          <p className="text-gray-500 text-sm mb-8">CMS panelinə daxil olmaq üçün şifrəni daxil edin</p>
+
+          <form onSubmit={handleLogin} className="w-full space-y-4">
+            <div className="relative">
+              <input
+                type="password"
+                autoFocus
+                className={`w-full bg-neutral-900 border ${error ? 'border-red-500' : 'border-neutral-800'} text-white px-4 py-3 rounded-xl focus:border-indigo-500 focus:outline-none transition-all text-center tracking-widest`}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              {error && <p className="text-red-500 text-xs mt-2 font-medium">{error}</p>}
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition-all flex items-center justify-center gap-2 group"
+            >
+              Daxil ol
+              <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </form>
+
+          <button
+            onClick={closeAdmin}
+            className="mt-6 text-gray-500 hover:text-white text-xs transition-colors"
+          >
+            Geri qayıt
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
       <div className="bg-[#111] w-full max-w-6xl h-[90vh] rounded-xl shadow-2xl border border-neutral-800 flex flex-col overflow-hidden text-sm">
@@ -100,9 +173,17 @@ export const AdminPanel: React.FC = () => {
             OğuzGroup tərəfindən yaradıldı
           </div>
 
-          <button onClick={closeAdmin} className="text-gray-400 hover:text-white p-2">
-            <X size={20} />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleLogout}
+              className="text-xs text-gray-500 hover:text-red-400 transition-colors px-3 py-1 border border-neutral-800 rounded-lg hover:border-red-900/50"
+            >
+              Çıxış
+            </button>
+            <button onClick={closeAdmin} className="text-gray-400 hover:text-white p-2">
+              <X size={20} />
+            </button>
+          </div>
         </div>
 
         <div className="flex flex-1 overflow-hidden">
