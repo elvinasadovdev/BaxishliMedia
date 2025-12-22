@@ -60,8 +60,8 @@ export const AdminPanel: React.FC = () => {
       if (timeoutId) clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         handleLogout();
-        alert('Təhlükəsizlik üçün 10 saniyəlik hərəkətsizlikdən sonra sistemdən çıxış edildi.');
-      }, 10 * 1000); // 10 seconds
+        alert('Təhlükəsizlik üçün 1 dəqiqəlik hərəkətsizlikdən sonra sistemdən çıxış edildi.');
+      }, 60 * 1000); // 1 minute
     };
 
     // Listen for any user activity
