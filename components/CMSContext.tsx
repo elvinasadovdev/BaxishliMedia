@@ -1,6 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { SiteData } from '../types';
+import { useLocation } from 'react-router-dom';
 
 const defaultData: SiteData = {
   general: {
@@ -109,8 +110,12 @@ const CMSContext = createContext<CMSContextType | undefined>(undefined);
 export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<SiteData>(defaultData);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   const loadData = async () => {
+    // DO NOT poll if we are in the admin panel to avoid overwriting unsaved changes
+    if (location.pathname === '/admin') return false;
+
     try {
       // First try to load from Vercel API
       const response = await fetch('/api/cms-data');

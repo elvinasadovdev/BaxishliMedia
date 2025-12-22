@@ -29,9 +29,9 @@ const LandingPage = () => (
 
 const App: React.FC = () => {
   return (
-    <CMSProvider>
-      <ModalProvider>
-        <Router>
+    <Router>
+      <CMSProvider>
+        <ModalProvider>
           <ScrollToTop />
           <div className="bg-white min-h-screen text-gray-800 flex flex-col">
             <Navbar />
@@ -55,9 +55,9 @@ const App: React.FC = () => {
             <Footer />
             <AdminPanel />
           </div>
-        </Router>
-      </ModalProvider>
-    </CMSProvider>
+        </ModalProvider>
+      </CMSProvider>
+    </Router>
   );
 };
 
