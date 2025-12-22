@@ -52,9 +52,11 @@ const defaultData: SiteData = {
     ],
     brandLogos: [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/1024px-YouTube_Logo_2017.svg.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TikTok_logo.svg/1024px-TikTok_logo.svg.png",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png",
-      "https://upload.wikimedia.org/wikipedia/commons/b/b9/2023_Facebook_icon.svg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Believe_Music_Logo.svg/1200px-Believe_Music_Logo.svg.png"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_with_text.svg/1024px-Spotify_logo_with_text.svg.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/ITunes_12_logo.svg/1024px-ITunes_12_logo.svg.png",
+      "https://i.ibb.co/v4S8X8m/luna-music-house.png"
     ]
   },
   music: {
@@ -84,16 +86,16 @@ const defaultData: SiteData = {
     heading: "Bloq",
     subtitle: "Hər kəs üçün faydalı bloq yazılarımız",
     posts: [
-      { id: 1, title: "Yenilənmiş Təqlid Siyasəti", date: "2023-09-28 16:27:55", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop", views: "0 dəfə oxunub" },
-      { id: 2, title: "Digər müəlliflərin məzmunu ilə Shorts", date: "2023-09-28 16:14:12", image: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=1000&auto=format&fit=crop", views: "0 dəfə oxunub" },
-      { id: 3, title: "Tezliklə mobil cihazlarda Creative Studio", date: "2022-09-10 00:53:47", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop", views: "0 dəfə oxunub" }
+      { id: 1, title: "Yenilənmiş Təqlid Siyasəti", date: "2023-09-28 16:27:55", image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop", views: "0 dəfə oxunub", content: "YouTube-da təqlid siyasəti yeniləndi. Artıq kanal sahibləri digər kanalları təqlid edərkən daha diqqətli olmalıdırlar. Bu yenilik platformanın təhlükəsizliyini artırmaq məqsədi daşıyır." },
+      { id: 2, title: "Digər müəlliflərin məzmunu ilə Shorts", date: "2023-09-28 16:14:12", image: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=1000&auto=format&fit=crop", views: "0 dəfə oxunub", content: "Shorts videolarında digər müəlliflərin məzmunundan istifadə qaydaları dəyişdi. Yeni remiks funksiyaları ilə daha yaradıcı videolar hazırlaya bilərsiniz." },
+      { id: 3, title: "Tezliklə mobil cihazlarda Creative Studio", date: "2022-09-10 00:53:47", image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=1000&auto=format&fit=crop", views: "0 dəfə oxunub", content: "YouTube Creative Studio tezliklə mobil cihazlarda daha geniş funksionallıqla təqdim olunacaq. Kanalınızı idarə etmək artıq daha asan olacaq." }
     ]
   },
   contact: {
     heading: "Bizimlə əlaqə",
     directorName: "Pərvin Baxışlı",
     directorTitle: "Direktor",
-    directorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop"
+    directorImage: "/pervin-baxishli.png"
   }
 };
 
@@ -115,6 +117,10 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         if (response.ok) {
           const savedData = await response.json();
           if (savedData && typeof savedData === 'object') {
+            // Migration: Update director image if it's the old unsplash one
+            if (savedData.contact && savedData.contact.directorImage === "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop") {
+              savedData.contact.directorImage = "/pervin-baxishli.png";
+            }
             setData(prev => ({ ...prev, ...savedData }));
             return;
           }
@@ -129,6 +135,11 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         try {
           const savedData = JSON.parse(localData);
           if (savedData && typeof savedData === 'object') {
+            // Migration: Update director image if it's the old unsplash one
+            if (savedData.contact && savedData.contact.directorImage === "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop") {
+              savedData.contact.directorImage = "/pervin-baxishli.png";
+              localStorage.setItem('baxishlimedia-cms-data', JSON.stringify(savedData));
+            }
             setData(prev => ({ ...prev, ...savedData }));
             return;
           }

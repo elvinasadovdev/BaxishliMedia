@@ -37,43 +37,42 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-[#050505]/95 backdrop-blur-md py-4 shadow-md' : 'bg-transparent py-6'
-      }`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled
+          ? 'bg-[#050505]/95 backdrop-blur-md py-4 shadow-md'
+          : 'bg-[#050505]/90 backdrop-blur-sm py-6'
+        }`}
     >
       <div className="container mx-auto px-6 relative flex justify-between items-center">
-        
+
         {/* Logo Area - Fixed to the Left */}
         <Link to="/" className="flex flex-col leading-none group relative z-20">
-            <div className="text-3xl font-bold tracking-tighter">
-                <span className="text-[#f05a28]">Baxishli</span>
-            </div>
-            <div className="text-[10px] tracking-[0.3em] text-gray-400 font-light group-hover:text-white transition-colors">
-                MEDIA
-            </div>
+          <div className="text-3xl font-bold tracking-tighter">
+            <span className="text-[#f05a28]">Baxishli</span>
+          </div>
+          <div className="text-[10px] tracking-[0.3em] text-gray-400 font-light group-hover:text-white transition-colors">
+            MEDIA
+          </div>
         </Link>
 
         {/* Desktop Menu - Absolute Center */}
         <div className="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center gap-8">
           <div className="flex gap-8">
             {navItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.path}
-                  className={`text-sm font-medium transition-colors relative group whitespace-nowrap ${
-                    isActive(item.path) ? 'text-white' : 'text-gray-300 hover:text-white'
+              <Link
+                key={item.label}
+                to={item.path}
+                className={`text-sm font-medium transition-colors relative group whitespace-nowrap ${isActive(item.path) ? 'text-white' : 'text-gray-300 hover:text-white'
                   }`}
-                >
+              >
                 {item.label}
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#f05a28] transition-all duration-300 ${
-                    isActive(item.path) ? 'w-full' : 'w-0 group-hover:w-full'
-                }`}></span>
-                </Link>
+                <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#f05a28] transition-all duration-300 ${isActive(item.path) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}></span>
+              </Link>
             ))}
           </div>
-          
+
           {/* Blue CTA Button - Opens Modal */}
-          <button 
+          <button
             onClick={openModal}
             className="px-6 py-2.5 bg-[#0f6cbd] hover:bg-[#0d5ca0] text-white text-sm font-medium rounded-full transition-colors shadow-lg whitespace-nowrap"
           >
@@ -106,14 +105,14 @@ export const Navbar: React.FC = () => {
                 {item.label}
               </Link>
             ))}
-             <button 
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  openModal();
-                }}
-                className="px-8 py-3 bg-[#0f6cbd] text-white font-medium rounded-full"
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                openModal();
+              }}
+              className="px-8 py-3 bg-[#0f6cbd] text-white font-medium rounded-full"
             >
-                Müraciət et
+              Müraciət et
             </button>
           </div>
         </div>

@@ -1,30 +1,34 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useCMS } from './CMSContext';
 import { Users, Eye, Video } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 export const Partners: React.FC = () => {
   const { data } = useCMS();
   const { partners } = data;
+  const location = useLocation();
+  const isMainPage = location.pathname === '/';
 
   return (
     <section id="partners" className="py-24 bg-gray-50 text-center">
       <div className="container mx-auto px-6">
-        <motion.div 
-           initial={{ opacity: 0, y: 20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="mb-16"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-800 mb-2">{partners.heading}</h2>
-          <div className="text-sm text-gray-400 breadcrumbs uppercase tracking-widest">
-            Ana səhifə <span className="mx-2">/</span> Partnyorlar
-          </div>
+          {!isMainPage && (
+            <div className="text-sm text-gray-400 breadcrumbs uppercase tracking-widest">
+              Ana səhifə <span className="mx-2">/</span> Partnyorlar
+            </div>
+          )}
         </motion.div>
 
         {/* Partners Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
           {partners.items.map((item, index) => (
             <motion.div
               key={item.id}
@@ -44,15 +48,6 @@ export const Partners: React.FC = () => {
               </div>
             </motion.div>
           ))}
-        </div>
-
-        {/* Brand Logos */}
-        <div className="border-t border-gray-200 pt-16">
-          <div className="flex flex-wrap justify-center items-center gap-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-            {partners.brandLogos.map((logo, i) => (
-              <img key={i} src={logo} alt="Brand" className="h-12 object-contain" />
-            ))}
-          </div>
         </div>
       </div>
     </section>

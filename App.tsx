@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
+import { PlatformBar } from './components/PlatformBar';
 import { About } from './components/About';
 import { Services } from './components/Services';
 import { Partners } from './components/Partners';
@@ -21,9 +22,8 @@ const LandingPage = () => (
     <Hero />
     <About />
     <Services />
-    <Partners />
     <Blog />
-    <Contact />
+    <PlatformBar />
   </>
 );
 

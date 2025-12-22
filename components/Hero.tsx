@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useCMS } from './CMSContext';
 
 export const Hero: React.FC = () => {
@@ -48,12 +49,12 @@ export const Hero: React.FC = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="inline-block px-10 py-4 bg-[#f05a28] text-white font-semibold text-lg rounded-full hover:bg-[#d35400] transition-all duration-300 shadow-lg transform hover:scale-105"
           >
             {hero.buttonText}
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
