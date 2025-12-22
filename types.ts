@@ -56,6 +56,7 @@ export interface SiteData {
     contactEmail: string;
     contactPhone: string;
     address: string;
+    formspreeId: string;
   };
   hero: {
     title: string;

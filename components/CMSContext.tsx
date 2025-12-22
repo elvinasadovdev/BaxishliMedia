@@ -8,7 +8,8 @@ const defaultData: SiteData = {
     artistName: "BaxishliMedia",
     contactEmail: "support@baxishlimedia.az",
     contactPhone: "(+994) 55 529 19 94",
-    address: "Heydər Əliyev prospekti ev 22 Mənzil 27, AZ 1800 Şirvan, Azərbaycan"
+    address: "Heydər Əliyev prospekti ev 22 Mənzil 27, AZ 1800 Şirvan, Azərbaycan",
+    formspreeId: "mjvngvzy"
   },
   hero: {
     title: "BaxishliMedia - Sizin Partnyorunuz",

@@ -27,22 +27,25 @@ export const Contact: React.FC = () => {
     setStatus('loading');
 
     try {
-      // Simulating the API backend call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const response = await fetch(`https://formspree.io/f/${general.formspreeId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...formData,
+          _subject: `Yeni Əlaqə Mesajı: ${formData.firstName} ${formData.lastName}`
+        })
+      });
 
-      // Mocking the required JSON response structure
-      const response = {
-        status: "success",
-        result: "Mesajınız uğurla göndərildi! Tezliklə sizinlə əlaqə saxlayacağıq.",
-        error: null
-      };
-
-      if (response.status === 'success') {
+      if (response.ok) {
         setStatus('success');
-        setFeedback(response.result);
+        setFeedback("Mesajınız uğurla göndərildi! Tezliklə sizinlə əlaqə saxlayacağıq.");
         setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
       } else {
-        throw new Error(response.error || 'Xəta baş verdi');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Xəta baş verdi');
       }
     } catch (error) {
       setStatus('error');
