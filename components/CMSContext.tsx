@@ -109,60 +109,76 @@ const CMSContext = createContext<CMSContextType | undefined>(undefined);
 export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<SiteData>(defaultData);
 
+  const loadData = async () => {
+    try {
+      // First try to load from Vercel API
+      const response = await fetch('/api/cms-data');
+      if (response.ok) {
+        const savedData = await response.json();
+        if (savedData && typeof savedData === 'object') {
+          // Migration: Update director image if it's the old unsplash one
+          if (savedData.contact && savedData.contact.directorImage === "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop") {
+            savedData.contact.directorImage = "/pervin-baxishli.png";
+          }
+          setData(prev => {
+            // Only update if data has actually changed to avoid unnecessary re-renders
+            if (JSON.stringify(prev) !== JSON.stringify({ ...prev, ...savedData })) {
+              return { ...prev, ...savedData };
+            }
+            return prev;
+          });
+          return true;
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load from API', error);
+    }
+    return false;
+  };
+
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        // First try to load from Vercel API
-        const response = await fetch('/api/cms-data');
-        if (response.ok) {
-          const savedData = await response.json();
-          if (savedData && typeof savedData === 'object') {
-            // Migration: Update director image if it's the old unsplash one
-            if (savedData.contact && savedData.contact.directorImage === "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop") {
-              savedData.contact.directorImage = "/pervin-baxishli.png";
+    const initialLoad = async () => {
+      const apiSuccess = await loadData();
+
+      if (!apiSuccess) {
+        // Fallback to localStorage for saved data if API fails
+        const localData = localStorage.getItem('baxishlimedia-cms-data');
+        if (localData) {
+          try {
+            const savedData = JSON.parse(localData);
+            if (savedData && typeof savedData === 'object') {
+              // Migration: Update director image if it's the old unsplash one
+              if (savedData.contact && savedData.contact.directorImage === "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop") {
+                savedData.contact.directorImage = "/pervin-baxishli.png";
+                localStorage.setItem('baxishlimedia-cms-data', JSON.stringify(savedData));
+              }
+              setData(prev => ({ ...prev, ...savedData }));
             }
-            setData(prev => ({ ...prev, ...savedData }));
-            return;
+          } catch (e) {
+            console.error("Failed to parse localStorage data", e);
           }
         }
-      } catch (error) {
-        console.error('Failed to load from API, falling back to localStorage', error);
-      }
 
-      // Fallback to localStorage for saved data
-      const localData = localStorage.getItem('baxishlimedia-cms-data');
-      if (localData) {
-        try {
-          const savedData = JSON.parse(localData);
-          if (savedData && typeof savedData === 'object') {
-            // Migration: Update director image if it's the old unsplash one
-            if (savedData.contact && savedData.contact.directorImage === "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2070&auto=format&fit=crop") {
-              savedData.contact.directorImage = "/pervin-baxishli.png";
-              localStorage.setItem('baxishlimedia-cms-data', JSON.stringify(savedData));
+        // Fallback to script tag data
+        const scriptTag = document.getElementById('site-data');
+        if (scriptTag && scriptTag.textContent) {
+          try {
+            const savedData = JSON.parse(scriptTag.textContent);
+            if (savedData && typeof savedData === 'object') {
+              setData(prev => ({ ...prev, ...savedData }));
             }
-            setData(prev => ({ ...prev, ...savedData }));
-            return;
+          } catch (e) {
+            console.error("Failed to parse embedded site data", e);
           }
-        } catch (e) {
-          console.error("Failed to parse localStorage data", e);
-        }
-      }
-
-      // Fallback to script tag data
-      const scriptTag = document.getElementById('site-data');
-      if (scriptTag && scriptTag.textContent) {
-        try {
-          const savedData = JSON.parse(scriptTag.textContent);
-          if (savedData && typeof savedData === 'object') {
-            setData(prev => ({ ...prev, ...savedData }));
-          }
-        } catch (e) {
-          console.error("Failed to parse embedded site data", e);
         }
       }
     };
 
-    loadData();
+    initialLoad();
+
+    // Real-time updates: Poll the API every 5 seconds to sync changes across all devices
+    const interval = setInterval(loadData, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   const updateData = (newData: SiteData) => {
