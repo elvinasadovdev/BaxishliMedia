@@ -45,11 +45,36 @@ export const AdminPanel: React.FC = () => {
   };
 
   const tabLabels: Record<string, string> = {
-    general: 'Tənzimləmələr',
     partners: 'Partnyorlar',
     blog: 'Bloq',
     contact: 'Əlaqə'
   };
+
+  // Inactivity timeout: 10 minutes
+  useEffect(() => {
+    if (!isAuthenticated || !isOpen) return;
+
+    let timeoutId: NodeJS.Timeout;
+
+    const resetTimer = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        handleLogout();
+        alert('Təhlükəsizlik üçün 10 dəqiqəlik hərəkətsizlikdən sonra sistemdən çıxış edildi.');
+      }, 10 * 60 * 1000); // 10 minutes
+    };
+
+    // Listen for any user activity
+    const activityEvents = ['mousemove', 'mousedown', 'keypress', 'scroll', 'touchstart'];
+    activityEvents.forEach(event => window.addEventListener(event, resetTimer));
+
+    resetTimer(); // Initial start
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      activityEvents.forEach(event => window.removeEventListener(event, resetTimer));
+    };
+  }, [isAuthenticated, isOpen]);
 
   useEffect(() => {
     setIsOpen(location.pathname === '/admin');
@@ -191,7 +216,7 @@ export const AdminPanel: React.FC = () => {
           {/* Sidebar */}
           <div className="w-48 bg-[#0a0a0a] border-r border-neutral-800 flex flex-col overflow-y-auto">
             <div className="p-4 text-xs font-bold text-gray-600 uppercase tracking-widest">Məzmun</div>
-            {(['general', 'partners', 'blog', 'contact'] as Array<keyof SiteData>).map((key) => (
+            {(['partners', 'blog', 'contact'] as Array<keyof SiteData>).map((key) => (
               <button
                 key={key}
                 onClick={() => setActiveTab(key)}
@@ -256,33 +281,6 @@ export const AdminPanel: React.FC = () => {
                       onChange={(e) => updateData({ ...data, general: { ...data.general, formspreeId: e.target.value } })}
                     />
                     <p className="text-[10px] text-gray-600 mt-1 italic">Məsələn: mjvngvzy. Formspree-dən aldığınız ID-ni bura yazın.</p>
-                  </div>
-                </>
-              ) : activeTab === 'general' ? (
-                <>
-                  <div>
-                    <label className="text-xs text-gray-500 font-bold uppercase mb-1 block">Sənətçi Adı</label>
-                    <input
-                      className="w-full bg-neutral-900 border border-neutral-800 text-white px-3 py-2 rounded focus:border-indigo-500 focus:outline-none"
-                      value={data.general.artistName}
-                      onChange={(e) => updateData({ ...data, general: { ...data.general, artistName: e.target.value } })}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-gray-500 font-bold uppercase mb-1 block">Hero Başlıq</label>
-                    <input
-                      className="w-full bg-neutral-900 border border-neutral-800 text-white px-3 py-2 rounded focus:border-indigo-500 focus:outline-none"
-                      value={data.hero.title}
-                      onChange={(e) => updateData({ ...data, hero: { ...data.hero, title: e.target.value } })}
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-gray-500 font-bold uppercase mb-1 block">Hero Alt Başlıq</label>
-                    <input
-                      className="w-full bg-neutral-900 border border-neutral-800 text-white px-3 py-2 rounded focus:border-indigo-500 focus:outline-none"
-                      value={data.hero.subtitle}
-                      onChange={(e) => updateData({ ...data, hero: { ...data.hero, subtitle: e.target.value } })}
-                    />
                   </div>
                 </>
               ) : (
