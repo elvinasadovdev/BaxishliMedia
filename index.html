@@ -1,58 +1,49 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BaxishliMedia | Rəsmi Sənətçi Saytı</title>
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- CMS DATA STORAGE: This script tag holds the website content. The Admin Panel updates this. -->
-    <script id="site-data" type="application/json"></script>
-    <style>
-      body {
-        font-family: 'Montserrat', sans-serif;
-        background-color: #050505;
-        color: #e5e5e5;
-      }
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0a0a0a;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #333;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
-    "react-router-dom": "https://esm.sh/react-router-dom@6.22.3?external=react,react-dom",
-    "@remix-run/router": "https://esm.sh/@remix-run/router@1.15.3"
-  }
-}
-</script>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BaxishliMedia | Rəsmi Sənətçi Saytı</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- CMS DATA STORAGE: This script tag holds the website content. The Admin Panel updates this. -->
+  <script id="site-data" type="application/json"></script>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #050505;
+      color: #e5e5e5;
+      margin: 0;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
 </head>
-  <body>
-    <div id="root">
-      <div style="color: #333; text-align: center; padding-top: 100px; font-family: sans-serif; font-size: 12px; letter-spacing: 2px;">
-        LOADING EXPERIENCE...
-      </div>
-    </div>
-    <!-- CRITICAL: This script loads the React application -->
-    <script type="module" src="./index.tsx"></script>
-  </body>
+
+<body>
+  <div id="root"></div>
+  <!-- CRITICAL: This script loads the React application -->
+  <script type="module" src="./index.tsx"></script>
+</body>
+
 </html>
