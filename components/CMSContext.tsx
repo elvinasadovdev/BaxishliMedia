@@ -192,6 +192,8 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const updateData = (newData: SiteData) => {
     setData(newData);
+    // Auto-save to localStorage so entries are remembered even if page is refreshed
+    localStorage.setItem('baxishlimedia-cms-data', JSON.stringify(newData));
   };
 
   return (
