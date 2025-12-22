@@ -52,11 +52,12 @@ const defaultData: SiteData = {
       { id: 6, name: "Çinarə Məlikzadə", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop", stats: "170M • 496K • 84" },
     ],
     brandLogos: [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/1024px-YouTube_Logo_2017.svg.png",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TikTok_logo.svg/1024px-TikTok_logo.svg.png",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/2048px-Instagram_logo_2016.svg.png",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_with_text.svg/1024px-Spotify_logo_with_text.svg.png",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/ITunes_12_logo.svg/1024px-ITunes_12_logo.svg.png",
+      "/youtube-logo.png",
+      "/tiktok-logo.png",
+      "/instagram-logo.png",
+      "/spotify-logo.png",
+      "/itunes-logo.png",
+      "/believe-logo.png",
       "https://i.ibb.co/v4S8X8m/luna-music-house.png"
     ]
   },

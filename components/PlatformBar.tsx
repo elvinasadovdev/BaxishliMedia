@@ -10,7 +10,7 @@ const platforms = [
     { name: 'iTunes', logo: '/itunes-logo.png' },
     { name: 'Luna Music', logo: 'https://i.ibb.co/v4S8X8m/luna-music-house.png' },
     { name: 'Yoola', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Yoola_Logo.svg/512px-Yoola_Logo.svg.png' },
-    { name: 'Believe', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Believe_Music_Logo.svg/512px-Believe_Music_Logo.svg.png' },
+    { name: 'Believe', logo: '/believe-logo.png' },
     { name: 'Facebook', logo: '/facebook-logo.png' }
 ];
 
