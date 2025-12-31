@@ -38,14 +38,20 @@ export const Navbar: React.FC = () => {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled
-          ? 'bg-[#050505]/95 backdrop-blur-md py-4 shadow-md'
-          : 'bg-[#050505]/90 backdrop-blur-sm py-6'
+        ? 'bg-[#050505]/95 backdrop-blur-md py-4 shadow-md'
+        : 'bg-[#050505]/90 backdrop-blur-sm py-6'
         }`}
     >
       <div className="container mx-auto px-6 relative flex justify-between items-center">
 
         {/* Logo Area - Fixed to the Left */}
-        <Link to="/" className="flex flex-col leading-none group relative z-20">
+        <Link
+          to="/"
+          className="flex flex-col leading-none group relative z-20"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        >
           <div className="text-3xl font-bold tracking-tighter">
             <span className="text-[#f05a28]">Baxishli</span>
           </div>
