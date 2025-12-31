@@ -186,11 +186,15 @@ export const CMSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
 
     initialLoad();
+  }, []); // Only run once on mount
 
+  // Polling logic moved to a separate useEffect that depends on location
+  useEffect(() => {
     // Real-time updates: Poll the API every 5 seconds to sync changes across all devices
+    // This interval will be recreated if the location changes, ensuring the path check in loadData is accurate
     const interval = setInterval(loadData, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [location.pathname]); // CRITICAL fix: Re-run when navigation happens to update the loadData context
 
   const updateData = (newData: SiteData) => {
     setData(newData);

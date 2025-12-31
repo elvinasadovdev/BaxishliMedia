@@ -87,6 +87,7 @@ export const AdminPanel: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'x-cms-secret': ADMIN_PASSWORD // Send the secret to authorize the update
         },
         body: JSON.stringify(data),
       });
@@ -134,6 +135,17 @@ export const AdminPanel: React.FC = () => {
     setIsOpen(false);
     navigate('/');
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
